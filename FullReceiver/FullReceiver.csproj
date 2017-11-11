@@ -72,8 +72,11 @@
     <Compile Include="IDemoMessageReceiver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receivers\DuplicateMessageReceiver.cs" />
     <Compile Include="Receivers\BasicQueueReceiver.cs" />
     <Compile Include="Receivers\BasicTopicReceiver.cs" />
+    <Compile Include="Receivers\QueueSessionReceiver.cs" />
+    <Compile Include="Receivers\RequestResponseReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

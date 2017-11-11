@@ -12,6 +12,7 @@ namespace FullReceiver.Receivers
         //    QueueClient receiveClient = QueueClient.CreateFromConnectionString(ConfigurationManager.AppSettings[Helpers.ConnectionStringKey], Helpers.BasicQueueName);
         //    BrokeredMessage message = await receiveClient.ReceiveAsync();
         //    await Helpers.PrintMessageInfo(message);
+        //    await message.Complete();
         //}
 
         public async Task Receive()
@@ -22,6 +23,7 @@ namespace FullReceiver.Receivers
             receiveClient.OnMessageAsync(async message =>
             {
                 await Helpers.PrintMessageInfo(message);
+                await message.CompleteAsync();
             });
 
             await Task.Delay(TimeSpan.FromMinutes(1));

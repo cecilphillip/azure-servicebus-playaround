@@ -6,6 +6,8 @@
         public const string SessionQueueName = "basic-session-queue";
         public const string BasicQueueName = "basic-queue";
         public const string BasicTopicName = "basic-topic";
+        public const string ResponseQueue = "temp-response-queue";
+
         public static dynamic GetModels()
         {
             return new[]

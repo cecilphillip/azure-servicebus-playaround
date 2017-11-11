@@ -12,6 +12,7 @@ namespace FullReceiver
         public const string SessionQueueName = "basic-session-queue";
         public const string BasicQueueName = "basic-queue";
         public const string BasicTopicName = "basic-topic";
+        public const string ResponseQueue = "temp-response-queue";        
 
         public static async Task PrintMessageInfo(BrokeredMessage message)
         {
@@ -19,7 +20,7 @@ namespace FullReceiver
             Console.WriteLine($"Label : {message.Label}");
             Console.WriteLine($"Content Type : {message.ContentType}");
             Console.WriteLine($"Time to Live : {message.TimeToLive.TotalMinutes} minutes");
-
+            Console.WriteLine($"Session ID: {message.SessionId}");
             Stream messageBodyStream = message.GetBody<Stream>();
             string messageString = JToken.Parse(await new StreamReader(messageBodyStream).ReadToEndAsync()).ToString();
             Console.WriteLine($"Message Content {messageString}");

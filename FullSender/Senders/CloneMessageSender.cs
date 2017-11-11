@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FullSender.Senders
 {
-    public class BasicQueueSender : IDemoMessageSender
+    public class CloneMessageSender : IDemoMessageSender
     {
         public async Task Send()
         {
@@ -23,7 +23,10 @@ namespace FullSender.Senders
                 Label = "dynamic data",
                 TimeToLive = TimeSpan.FromMinutes(20),
             };
-           
+            message.Properties.Add("MyCustomSetting", "Setting value");
+
+            await sendClient.SendAsync(message);
+            message = message.Clone();
             await sendClient.SendAsync(message);
         }
     }

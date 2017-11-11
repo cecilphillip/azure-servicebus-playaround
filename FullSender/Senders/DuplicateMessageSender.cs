@@ -1,16 +1,14 @@
 ﻿using Microsoft.ServiceBus.Messaging;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FullSender.Senders
 {
-    public class BasicQueueSender : IDemoMessageSender
+    public class DuplicateMessageSender : IDemoMessageSender
     {
         public async Task Send()
         {
@@ -19,11 +17,20 @@ namespace FullSender.Senders
 
             BrokeredMessage message = new BrokeredMessage(new MemoryStream(messageData), true)
             {
+                MessageId = "TheSameId",
                 ContentType = "application/json",
                 Label = "dynamic data",
                 TimeToLive = TimeSpan.FromMinutes(20),
             };
-           
+            message.Properties.Add("MyCustomSetting", "Setting value");
+
+            Console.WriteLine($"Sending message with ID {message.MessageId}");
+            await sendClient.SendAsync(message);
+
+            message = message.Clone();
+            message.MessageId = "TheSameId";
+
+            Console.WriteLine($"Sending message with ID {message.MessageId}");
             await sendClient.SendAsync(message);
         }
     }

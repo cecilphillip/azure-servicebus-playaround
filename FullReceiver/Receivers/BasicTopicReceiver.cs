@@ -36,17 +36,19 @@ namespace FullReceiver.Receivers
 
         public async Task Receive()
         {
-            string subscriptionName = Guid.NewGuid().ToString("N");
+            string subscriptionName = "same";//Guid.NewGuid().ToString("N");
             MessagingFactory factory = MessagingFactory.CreateFromConnectionString(ConfigurationManager.AppSettings[Helpers.ConnectionStringKey]);
 
             // Create subscription
             SubscriptionDescription description = new SubscriptionDescription(Helpers.BasicTopicName, subscriptionName)
             {
-                AutoDeleteOnIdle = TimeSpan.FromMinutes(5)
+                AutoDeleteOnIdle = TimeSpan.FromMinutes(25)
             };
 
-            NamespaceManager manager = NamespaceManager.CreateFromConnectionString(ConfigurationManager.AppSettings[Helpers.ConnectionStringKey]);            
-            await manager.CreateSubscriptionAsync(description);
+            NamespaceManager manager = NamespaceManager.CreateFromConnectionString(ConfigurationManager.AppSettings[Helpers.ConnectionStringKey]);
+
+            if (!manager.SubscriptionExists(Helpers.BasicTopicName, subscriptionName))
+                await manager.CreateSubscriptionAsync(description);
 
             // Receive messagea.
             var tcs = new TaskCompletionSource<bool>();

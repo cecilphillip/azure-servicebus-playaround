@@ -12,7 +12,7 @@ namespace FullReceiver
         static async Task Main(string[] args)
         {
 
-            IDemoMessageReceiver receiver = new BasicTopicReceiver();
+            IDemoMessageReceiver receiver = new RequestResponseReceiver();
             try
             {
                 var random = new Random();

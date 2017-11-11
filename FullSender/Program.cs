@@ -11,11 +11,12 @@ namespace FullSender
     {
         static async Task Main(string[] args)
         {
-            IDemoMessageSender sender = new BasicTopicSender();
+            IDemoMessageSender sender = new RequestResponseSender();
 
             try
             {
                 await sender.Send();
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
