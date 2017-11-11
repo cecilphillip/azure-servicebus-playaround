@@ -17,12 +17,13 @@ namespace FullSender.Senders
             QueueClient sendClient = QueueClient.CreateFromConnectionString(ConfigurationManager.AppSettings[Helpers.ConnectionStringKey], Helpers.BasicQueueName);
             byte[] messageData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Helpers.GetModels()));
 
-            BrokeredMessage message = new BrokeredMessage(new MemoryStream(messageData))
+            BrokeredMessage message = new BrokeredMessage(new MemoryStream(messageData), true)
             {
                 ContentType = "application/json",
                 Label = "dynamic data",
-                TimeToLive = TimeSpan.FromMinutes(20)
+                TimeToLive = TimeSpan.FromMinutes(20),
             };
+            message.Properties.Add("MyCustomSetting", "Setting value");
 
             await sendClient.SendAsync(message);
         }

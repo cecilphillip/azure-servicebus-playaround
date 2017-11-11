@@ -19,7 +19,7 @@ namespace FullSender.Senders
 
             byte[] messageData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(Helpers.GetModels()));
 
-            BrokeredMessage message = new BrokeredMessage(new MemoryStream(messageData))
+            BrokeredMessage message = new BrokeredMessage(new MemoryStream(messageData), true)
             {
                 ContentType = "application/json",
                 Label = "dynamic topic data",
