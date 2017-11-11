@@ -36,7 +36,7 @@ namespace FullReceiver.Receivers
 
         public async Task Receive()
         {
-            string subscriptionName = "same";//Guid.NewGuid().ToString("N");
+            string subscriptionName = Guid.NewGuid().ToString("N");
             MessagingFactory factory = MessagingFactory.CreateFromConnectionString(ConfigurationManager.AppSettings[Helpers.ConnectionStringKey]);
 
             // Create subscription
